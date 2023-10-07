@@ -12,7 +12,7 @@ public class Staff : MonoBehaviour
         Vector3 objectScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
 
         Vector3 direction = mousePosition - objectScreenPosition;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + offset;  
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg ;  
 
         Vector3 currentRotation = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(currentRotation.x, angle, currentRotation.z);
