@@ -120,12 +120,12 @@ GameObject:
   - component: {fileID: 441923307200278677}
   - component: {fileID: 3311452185935491896}
   - component: {fileID: 2192256165564703580}
-  - component: {fileID: 5913174622939279959}
   - component: {fileID: 7586963063784518136}
   - component: {fileID: -5329519219948994628}
+  - component: {fileID: 7934633988363836622}
   m_Layer: 0
   m_Name: Green
-  m_TagString: Untagged
+  m_TagString: Marble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,13 +138,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7192155660204209191}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.26, y: 0, z: 20.69}
+  m_LocalPosition: {x: 66, y: 0, z: 20.69}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2939950772301797377}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &441923307200278677
 MeshFilter:
@@ -173,8 +173,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 5a661a239978b5e4593eac407e3a67cb, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -217,22 +216,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5913174622939279959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192155660204209191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e022dfae49565e408b4880392fc350b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endOfPathInstruction: 2
-  targetDistance: 0
-  smoothTime: 0.1
-  smoothMaxSpeed: 50
 --- !u!114 &7586963063784518136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 2
   pathFollower: {fileID: 0}
+  parentWave: {fileID: 0}
 --- !u!54 &-5329519219948994628
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -263,14 +247,30 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &7934633988363836622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192155660204209191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e022dfae49565e408b4880392fc350b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endOfPathInstruction: 2
+  targetDistance: 0
+  smoothTime: 0.1
+  smoothMaxSpeed: 50

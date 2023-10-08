@@ -1,4 +1,3 @@
-using PathCreation.Examples;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using UnityEngine.Device;
 
 public class Staff : MonoBehaviour
 {
-    [SerializeField] private Marble[] marblePrefabs;
+    [SerializeField] private ParticleSystem[] staffParticles;
     [SerializeField] private GameObject spawnPoint;
 
     public int maxColorCount = 2;
@@ -28,7 +27,17 @@ public class Staff : MonoBehaviour
 
         marbleColorManager.OnAvailableColorAdded += OnFirstAvailableColor;
         marbleColorManager.OnAvailableColorRemoved += OnAvailableColorRemoved;
-    }    
+    }
+
+    void Update()
+    {
+        LookAtMouse();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire();
+        }
+    }
 
     private void OnFirstAvailableColor(MarbleColor _)
     {
@@ -46,8 +55,28 @@ public class Staff : MonoBehaviour
                 Debug.Log("No colors available");
                 yield break;
             }
-            staffColors.Add(marbleColorManager.GetRandomMarbleColor());
+            var marbleColor = marbleColorManager.GetRandomAvailableMarbleColor();
+            staffColors.Add(marbleColor);
+                       
+            UpdateStaffColors();
         }   
+    }
+
+    private void UpdateStaffColors()
+    {
+        //for (int i = 0; i < staffParticles.Length; i++)
+        //{
+        //    if (staffColors.Count < i + 1)
+        //    {
+        //        staffParticles[i].gameObject.SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        staffParticles[i].gameObject.SetActive(true);
+        //        var main = staffParticles[i].GetComponent<ParticleSystem>().main;
+        //        main.startColor = staffColors[i].GetRgbColor();                
+        //    }            
+        //}               
     }
 
     private void OnAvailableColorRemoved(MarbleColor color)
@@ -55,6 +84,7 @@ public class Staff : MonoBehaviour
         if(marbleColorManager.availableColors.Count == 0)
         {
             staffColors.Clear();
+            UpdateStaffColors();
             return;
         }
 
@@ -62,20 +92,12 @@ public class Staff : MonoBehaviour
         {
             if (staffColors[i] == color)
             {
-                staffColors[i] = marbleColorManager.GetRandomMarbleColor();
+                staffColors[i] = marbleColorManager.GetRandomAvailableMarbleColor();
             }
         }
+        UpdateStaffColors();
     }
 
-    void Update()
-    {
-        LookAtMouse();
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Fire();
-        }
-    }
 
     private void LookAtMouse()
     {
@@ -89,7 +111,8 @@ public class Staff : MonoBehaviour
         if (staffColors.Count == 0) return;
         
         var marblePrefab = marbleColorManager.GetMarblePrefab(staffColors[0]);
-        staffColors.RemoveAt(0);        
+        staffColors.RemoveAt(0);
+        UpdateStaffColors();
 
         InstantiateAndSetupProjectile(marblePrefab);
 
@@ -104,10 +127,7 @@ public class Staff : MonoBehaviour
 
         projectile.AddComponent<Projectile>();
         projectile.tag = "Projectile";
-        projectile.GetComponent<PathFollower>().enabled = false;
-
-        var rb = projectile.GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * 50f;        
+        projectile.GetComponent<PathFollower>().enabled = false;            
     }
 
   

@@ -5,39 +5,41 @@ using UnityEngine;
 public class PathFollower : MonoBehaviour
 {
     [HideInInspector]
-    public PathCreator PathCreator { get; set; }
+    public PathCreator pathCreator { get; set; }
     public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Stop;
 
     public float targetDistance;
-    public float smoothTime = 0.1f; // time to reach target
+    public float smoothTime = 1f; // time to reach target
     public float smoothMaxSpeed = 50f; //projectile speed
 
-    private float distanceTravelled;
-    private float currentVelocity;
-
-    void Start()
-    {
-        Debug.Log("PathFollower start");
-        Move(false);
-    }
+    private Vector3 currentVelocityPosition = Vector3.zero;
+    private float currentVelocityRotation = 0;
 
     void Update()
     {
-        Move(true);
+        Move();
     }
 
-    private void Move(bool smooth)
+    private void Move()
     {
-        if(smooth)
-        {
-            distanceTravelled = Mathf.SmoothDamp(distanceTravelled, targetDistance, ref currentVelocity, smoothTime, smoothMaxSpeed);
-        }
-        else
-        {
-            distanceTravelled = targetDistance;
-        }
-        
-        transform.position = PathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-        transform.rotation = PathCreator.path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
+        var targetPosition = pathCreator.path.GetPointAtDistance(targetDistance, endOfPathInstruction);
+        var targetRotation = pathCreator.path.GetRotationAtDistance(targetDistance, endOfPathInstruction);
+
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocityPosition, smoothTime, smoothMaxSpeed);
+        transform.rotation = SmoothDampQuaternionYAxis(transform.rotation, targetRotation, ref currentVelocityRotation, smoothTime, smoothMaxSpeed);
+    }
+
+    private Quaternion SmoothDampQuaternionYAxis(Quaternion current, Quaternion target, ref float currentVelocity, float smoothTime, float smoothMaxSpeed)
+    {
+        if (Time.deltaTime == 0) return current;
+        if (smoothTime == 0) return target;
+
+        Vector3 c = current.eulerAngles;
+        Vector3 t = target.eulerAngles;
+        return Quaternion.Euler(
+          t.x,
+          Mathf.SmoothDampAngle(c.y, t.y, ref currentVelocity, smoothTime, smoothMaxSpeed),
+          t.z
+        );
     }
 }

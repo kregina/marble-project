@@ -120,12 +120,12 @@ GameObject:
   - component: {fileID: 2030916381825125401}
   - component: {fileID: 6674832201885060924}
   - component: {fileID: 7049469196314136283}
-  - component: {fileID: 2608841517454706755}
   - component: {fileID: 2256799090142752218}
   - component: {fileID: -4514324774530667742}
+  - component: {fileID: -775489962706358225}
   m_Layer: 0
   m_Name: Blue
-  m_TagString: Untagged
+  m_TagString: Marble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,13 +138,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7069806712725926968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.26, y: 0, z: 20.69}
+  m_LocalPosition: {x: 66, y: 0, z: 20.69}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 182964774139725118}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2030916381825125401
 MeshFilter:
@@ -216,22 +216,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2608841517454706755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7069806712725926968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e022dfae49565e408b4880392fc350b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endOfPathInstruction: 2
-  targetDistance: 0
-  smoothTime: 0.1
-  smoothMaxSpeed: 50
 --- !u!114 &2256799090142752218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 1
   pathFollower: {fileID: 0}
+  parentWave: {fileID: 0}
 --- !u!54 &-4514324774530667742
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -262,14 +247,30 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &-775489962706358225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069806712725926968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e022dfae49565e408b4880392fc350b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endOfPathInstruction: 2
+  targetDistance: 0
+  smoothTime: 0.1
+  smoothMaxSpeed: 50

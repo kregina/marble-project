@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 96580692284038770}
   - component: {fileID: 4470484570226922064}
+  - component: {fileID: -5985482782257537829}
   m_Layer: 0
   m_Name: Wave
   m_TagString: Untagged
@@ -47,4 +48,21 @@ MonoBehaviour:
   pathCreator: {fileID: 0}
   marbles: []
   pusher: {fileID: 4376934883381131813, guid: d7af9d9d8c25cda4caf70841172cf500, type: 3}
+  pusherPrefab: {fileID: 4376934883381131813, guid: d7af9d9d8c25cda4caf70841172cf500,
+    type: 3}
+  marblesPerWave: 0
+  marbleColorManager: {fileID: 0}
   speed: 3
+--- !u!114 &-5985482782257537829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503995955066354944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc55e4477f6ed44a892c142bc238291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wave: {fileID: 4470484570226922064}

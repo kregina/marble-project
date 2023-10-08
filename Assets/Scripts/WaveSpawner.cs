@@ -1,5 +1,4 @@
 using PathCreation;
-using PathCreation.Examples;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,45 +7,53 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-	public PathCreator pathCreator;
-	public Pusher pusherPrefab;
-	public Marble[] marblePrefabs;
+	public PathCreator pathCreator;	
 	public Wave wavePrefab;
 
 	public int waveCount = 1;
 	public int marblesPerWave = 10;
 	public int waveIntervalSeconds = 30;
 
+	private int completedWaves = 0;
+
 	[SerializeField] private List<Wave> waves = new List<Wave>();
 
 	void Start()
 	{
-		SpawnWave();
+		StartCoroutine(SpawnWaveCoroutine());
 	}
 
-	void SpawnWave()
+    IEnumerator SpawnWaveCoroutine()
+    {
+        for (int i = 0; i < waveCount; i++)
+        {
+            SpawnWave();
+            yield return new WaitForSeconds(waveIntervalSeconds);
+        }
+    }
+
+    void SpawnWave()
 	{
 		var newWave = Instantiate(wavePrefab);
 		newWave.pathCreator = pathCreator;
-		
-		newWave.pusher = Instantiate(pusherPrefab, newWave.transform);
-		newWave.pusher.GetComponent<PathFollower>().PathCreator = pathCreator;
+		newWave.marblesPerWave = marblesPerWave;
 
-		for (int i = 0; i < marblesPerWave; i++)
-		{
-			var marble = Instantiate(RandomMarblePrefab(), newWave.transform);
-            marble.GetComponent<PathFollower>().PathCreator = pathCreator;
-			newWave.marbles.Add(marble);
-		}
+		newWave.OnMarblesChanged += OnMarblesChanged;
 
-		waves.Add(newWave);
+
+        waves.Add(newWave);
 	}
 
-    public Marble RandomMarblePrefab()
-    {
-        int index = Random.Range(0, marblePrefabs.Length - 1);
-        return marblePrefabs[index];
+	void OnMarblesChanged(Wave wave, int originIndex)
+	{
+        if (wave.marbles.Count == 0)
+		{
+            completedWaves++;
+        }
+
+		if(completedWaves == waveCount)
+		{
+			Debug.Log("You win!");
+		}
     }
-
-
 }
