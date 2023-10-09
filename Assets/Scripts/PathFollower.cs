@@ -1,5 +1,4 @@
 using PathCreation;
-using System.Collections;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour

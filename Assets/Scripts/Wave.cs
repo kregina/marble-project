@@ -1,7 +1,9 @@
 using PathCreation;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Wave : MonoBehaviour
 {
@@ -45,6 +47,7 @@ public class Wave : MonoBehaviour
             marble.parentWave = this;
             marble.pathFollower = marble.GetComponent<PathFollower>();
             marble.pathFollower.pathCreator = pathCreator;
+            marbleColorManager.AddColor(marble.color);
 
             marbles.Add(marble);
         }
@@ -74,6 +77,7 @@ public class Wave : MonoBehaviour
 
         Debug.Log($"Inserting marble at index: {index}");
         marbles.Insert(index, marble);
+        marbleColorManager.AddColor(marble.color);
 
         UpdateDistanceTraveledOnChildren();
 
@@ -84,6 +88,7 @@ public class Wave : MonoBehaviour
     {
         Debug.Log($"Removing marble at index: {index}");
         marbles.RemoveAt(index);
+        marbleColorManager.RemoveColor(marble.color);
         Destroy(marble.gameObject);
 
         OnMarblesChanged(this, index);
@@ -93,7 +98,9 @@ public class Wave : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            Destroy(marbles[startIndex + i].gameObject);
+            var marble = marbles[startIndex + i];
+            marbleColorManager.RemoveColor(marble.color);
+            Destroy(marble.gameObject);
         }
 
         Debug.Log($"Removing marbles at range {startIndex} +{count}");

@@ -1,30 +1,26 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+using System.Collections.ObjectModel;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Device;
 
 public class Staff : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem[] staffParticles;
-    [SerializeField] private GameObject spawnPoint;
-
     public int maxColorCount = 2;
 
-    MarbleColorManager marbleColorManager;
-    private Marble projectile;
-
-    private List<MarbleColor> staffColors = new();
-
+    [SerializeField] private GameObject spawnPoint;
     [SerializeField] private float colorCooldown = 1f;
+
+    public ObservableCollection<MarbleColor> staffColors = new();
+
+    private MarbleColorManager marbleColorManager;
+    private Marble projectile;
+    private Coroutine reloadColorsCoroutine;
+
 
     private void Start()
     {
+        Debug.Log("Staff Start");
         marbleColorManager = GameObject.FindWithTag("MarbleColorManager").GetComponent<MarbleColorManager>();
-
         marbleColorManager.OnAvailableColorAdded += OnFirstAvailableColor;
         marbleColorManager.OnAvailableColorRemoved += OnAvailableColorRemoved;
     }
@@ -41,13 +37,13 @@ public class Staff : MonoBehaviour
 
     private void OnFirstAvailableColor(MarbleColor _)
     {
-        StartCoroutine(ReloadColorsCoroutine());
+        reloadColorsCoroutine = StartCoroutine(ReloadColorsCoroutine());
         marbleColorManager.OnAvailableColorAdded -= OnFirstAvailableColor;
     }
 
     public IEnumerator ReloadColorsCoroutine()
-    {       
-        while(staffColors.Count < maxColorCount)
+    {
+        while ( staffColors.Count < maxColorCount)
         {
             yield return new WaitForSeconds(colorCooldown);
             if (marbleColorManager.availableColors.Count == 0)
@@ -57,34 +53,14 @@ public class Staff : MonoBehaviour
             }
             var marbleColor = marbleColorManager.GetRandomAvailableMarbleColor();
             staffColors.Add(marbleColor);
-                       
-            UpdateStaffColors();
-        }   
-    }
-
-    private void UpdateStaffColors()
-    {
-        //for (int i = 0; i < staffParticles.Length; i++)
-        //{
-        //    if (staffColors.Count < i + 1)
-        //    {
-        //        staffParticles[i].gameObject.SetActive(false);
-        //    }
-        //    else
-        //    {
-        //        staffParticles[i].gameObject.SetActive(true);
-        //        var main = staffParticles[i].GetComponent<ParticleSystem>().main;
-        //        main.startColor = staffColors[i].GetRgbColor();                
-        //    }            
-        //}               
+        }
     }
 
     private void OnAvailableColorRemoved(MarbleColor color)
     {
-        if(marbleColorManager.availableColors.Count == 0)
+        if (marbleColorManager.availableColors.Count == 0)
         {
             staffColors.Clear();
-            UpdateStaffColors();
             return;
         }
 
@@ -95,7 +71,6 @@ public class Staff : MonoBehaviour
                 staffColors[i] = marbleColorManager.GetRandomAvailableMarbleColor();
             }
         }
-        UpdateStaffColors();
     }
 
 
@@ -109,14 +84,14 @@ public class Staff : MonoBehaviour
     private void Fire()
     {
         if (staffColors.Count == 0) return;
-        
+
         var marblePrefab = marbleColorManager.GetMarblePrefab(staffColors[0]);
         staffColors.RemoveAt(0);
-        UpdateStaffColors();
 
         InstantiateAndSetupProjectile(marblePrefab);
 
-        StartCoroutine(ReloadColorsCoroutine());
+        StopCoroutine(reloadColorsCoroutine);
+        reloadColorsCoroutine = StartCoroutine(ReloadColorsCoroutine());
     }
 
     private void InstantiateAndSetupProjectile(Marble marblePrefab)
@@ -127,8 +102,8 @@ public class Staff : MonoBehaviour
 
         projectile.AddComponent<Projectile>();
         projectile.tag = "Projectile";
-        projectile.GetComponent<PathFollower>().enabled = false;            
+        projectile.GetComponent<PathFollower>().enabled = false;
     }
 
-  
+
 }
