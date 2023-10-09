@@ -10716,16 +10716,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 1646066434}
-  pusherPrefab: {fileID: 4376934883381131813, guid: d7af9d9d8c25cda4caf70841172cf500,
-    type: 3}
-  marblePrefabs:
-  - {fileID: 9108626253697099974, guid: 295cc64fe959da54cb1981a8b7a34fe6, type: 3}
-  - {fileID: 2256799090142752218, guid: d551698b76d4d3047885cecc0c069995, type: 3}
-  - {fileID: 7586963063784518136, guid: bb06955c0f6514f45b46169025266ce6, type: 3}
-  - {fileID: 4423318929999820951, guid: c98664c8b97dbad419b8e98fae16b9f0, type: 3}
-  - {fileID: 8625137314758653980, guid: 6624d8db1255b9e4e9a1876a42838a5a, type: 3}
-  - {fileID: 4913929942671266799, guid: 3097b2cac7f30824fb6d11e9b7e42b7f, type: 3}
-  - {fileID: 670984935095942955, guid: 3cbbe0d9925595a4bb54331be3cd49be, type: 3}
   wavePrefab: {fileID: 4470484570226922064, guid: afb33136dd716744aa612320c511137d,
     type: 3}
   waveCount: 1
