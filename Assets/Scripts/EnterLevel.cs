@@ -8,6 +8,8 @@ public class EnterLevel : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GameManager.Instance.LoadLevel(sceneName);
+        GameManager.Instance.LoadSceneWithTransition(sceneName);
     }
+
+
 }

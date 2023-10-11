@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Staff : MonoBehaviour
 {
@@ -28,6 +29,11 @@ public class Staff : MonoBehaviour
     void Update()
     {
         LookAtMouse();
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
 
         if (Input.GetMouseButtonDown(0))
         {

@@ -7,7 +7,6 @@ using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject menu;
     public static GameManager Instance { get; private set; }
     private Image fadeImage;
 
@@ -24,6 +23,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FindFadeImage();
+    }
+
+    public void LoadSceneWithTransition(string targetScene)
+    {
+        Debug.Log("Loading scene: " + targetScene);
+        StartCoroutine(FadeAndLoadScene(targetScene));
     }
 
     private void FindFadeImage()
@@ -53,32 +58,6 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindFadeImage();
-    }
-
-    public void StartGame()
-    {
-        LoadSceneWithTransition("Map");
-        if (menu != null)
-        {
-            menu.SetActive(false);
-        }
-    }
-
-    public void LoadLevel(string enterSceneName)
-    {
-        Debug.Log("Loading level " + enterSceneName);
-        LoadSceneWithTransition(enterSceneName);
-    }
-
-    public void BackToMenu()
-    {
-        SceneManager.LoadScene("Main");
-    }
-
-    private void LoadSceneWithTransition(string targetScene)
-    {
-        Debug.Log("Loading scene: " + targetScene);
-        StartCoroutine(FadeAndLoadScene(targetScene));
     }
 
     private IEnumerator FadeAndLoadScene(string sceneName)

@@ -10,12 +10,12 @@ public class Floating : MonoBehaviour
 
     void Start()
     {
-        initialYPosition = transform.position.z;
+        initialYPosition = transform.position.y;
     }
 
     void Update()
     {
-        float newZPosition = initialYPosition + Mathf.PingPong(Time.time * speed, height) - (height / 2f);
-        transform.position = new Vector3(transform.position.x, transform.position.y, newZPosition);
+        float newYPosition = initialYPosition + Mathf.PingPong(Time.time * speed, height) - (height / 2f);
+        transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
     }
 }
