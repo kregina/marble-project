@@ -9,6 +9,7 @@ TagManager:
   - Pusher
   - Marble
   - FadeImage
+  - LevelText
   layers:
   - Default
   - TransparentFX

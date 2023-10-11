@@ -28,6 +28,11 @@ public class Staff : MonoBehaviour
 
     void Update()
     {
+        if (Menu.Instance.gameIsPaused)
+        {
+            return;
+        }
+
         LookAtMouse();
 
         if (EventSystem.current.IsPointerOverGameObject())
@@ -49,7 +54,7 @@ public class Staff : MonoBehaviour
 
     public IEnumerator ReloadColorsCoroutine()
     {
-        while ( staffColors.Count < maxColorCount)
+        while (staffColors.Count < maxColorCount)
         {
             yield return new WaitForSeconds(colorCooldown);
             if (marbleColorManager.availableColors.Count == 0)

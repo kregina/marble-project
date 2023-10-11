@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
     public static Menu Instance { get; private set; }
-    [SerializeField] GameObject menu;
+    public Animator animator;
+
+    [HideInInspector]
+    public bool gameIsPaused;
 
     private void Awake()
     {
@@ -16,44 +16,49 @@ public class Menu : MonoBehaviour
         {
             Instance = this;
         }
-        else
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
     }
 
-    public void LoadMap()
+    public void Continue()
     {
-        LoadSceneWithTransition("Map");
+        Time.timeScale = 1f;
+        gameIsPaused = false;
     }
 
-    public void LoadLevel(string enterSceneName)
+    public void Pause()
     {
-        LoadSceneWithTransition(enterSceneName);
+        Time.timeScale = 0f;
+        gameIsPaused = true;
     }
 
-    public void PauseGame()
+    public void Quit()
     {
-        ShowMenu();
+        Application.Quit();
     }
 
-    public void BackToMain()
+    public void TransitionToScene(string sceneName)
     {
-        LoadSceneWithTransition("Main");
+        if(gameIsPaused)
+        {
+            Continue();
+        }
+        StartCoroutine(LoadScene(sceneName));
     }
 
-    private void LoadSceneWithTransition(string enterSceneName)
+    private IEnumerator LoadScene(string sceneName)
     {
-        CloseMenu();
-        GameManager.Instance.LoadSceneWithTransition(enterSceneName);
-    }
-    public void CloseMenu()
-    {
-        menu.SetActive(false);
+        animator.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene(sceneName);
     }
 
-    public void ShowMenu()
+    private void OnDestroy()
     {
-        menu.SetActive(true);
+        StopAllCoroutines();
     }
 }
