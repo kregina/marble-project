@@ -5,21 +5,24 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-	public PathCreator pathCreator;	
-	public Wave wavePrefab;
+    public PathCreator pathCreator;
+    public Wave wavePrefab;
 
-	public int waveCount = 1;
-	public int marblesPerWave = 10;
-	public int waveIntervalSeconds = 30;
+    public int waveCount = 1;
+    public int marblesPerWave = 10;
+    public int waveIntervalSeconds = 30;
 
-	private int completedWaves = 0;
+    [Header("ClearLevelPanel")]
+    [SerializeField] private GameObject clearLevelPanel;
 
-	[SerializeField] private List<Wave> waves = new List<Wave>();
+    private int completedWaves = 0;
 
-	void Start()
-	{
-		StartCoroutine(SpawnWaveCoroutine());
-	}
+    [SerializeField] private List<Wave> waves = new List<Wave>();
+
+    void Start()
+    {
+        StartCoroutine(SpawnWaveCoroutine());
+    }
 
     IEnumerator SpawnWaveCoroutine()
     {
@@ -31,27 +34,35 @@ public class WaveSpawner : MonoBehaviour
     }
 
     void SpawnWave()
-	{
-		var newWave = Instantiate(wavePrefab);
-		newWave.pathCreator = pathCreator;
-		newWave.marblesPerWave = marblesPerWave;
+    {
+        var newWave = Instantiate(wavePrefab);
+        newWave.pathCreator = pathCreator;
+        newWave.marblesPerWave = marblesPerWave;
 
-		newWave.OnMarblesChanged += OnMarblesChanged;
-
+        newWave.OnMarblesChanged += OnMarblesChanged;
 
         waves.Add(newWave);
-	}
+    }
 
-	void OnMarblesChanged(Wave wave, int originIndex)
-	{
+    void OnMarblesChanged(Wave wave, int originIndex)
+    {
         if (wave.marbles.Count == 0)
-		{
+        {
             completedWaves++;
         }
 
-		if(completedWaves == waveCount)
-		{
-			Debug.Log("You win!");
-		}
+        if (completedWaves == waveCount)
+        {
+            HandleCompletedWave(wave);
+        }
+    }
+
+    private void HandleCompletedWave(Wave wave)
+    {
+        Debug.Log("Level complete");
+        Destroy(wave.pusher.gameObject);
+        Menu.Instance.Pause();
+        GameManager.Instance.SetLevel(GameManager.Instance.level + 1);
+        clearLevelPanel.SetActive(true);
     }
 }

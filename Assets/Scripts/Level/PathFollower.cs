@@ -17,6 +17,12 @@ public class PathFollower : MonoBehaviour
     void Update()
     {
         Move();
+
+        if (targetDistance >= pathCreator.path.length)
+        {
+            LevelManager.Instance.Lose();
+            return;
+        }
     }
 
     private void Move()

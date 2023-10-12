@@ -8,8 +8,9 @@ TagManager:
   - Projectile
   - Pusher
   - Marble
-  - FadeImage
   - LevelText
+  - LevelManager
+  - End
   layers:
   - Default
   - TransparentFX

@@ -1,11 +1,26 @@
+using System;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] int level;
+    [SerializeField] private GameObject loseLevelPanel;
 
-    private void Start()
+    public static LevelManager Instance { get; private set; }
+
+    private void Awake()
     {
-        GameManager.Instance.SetLevel(level);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Lose()
+    {
+        loseLevelPanel.SetActive(true);
     }
 }

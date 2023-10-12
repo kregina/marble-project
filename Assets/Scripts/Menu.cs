@@ -7,6 +7,7 @@ public class Menu : MonoBehaviour
 {
     public static Menu Instance { get; private set; }
     public Animator animator;
+
     [SerializeField] private TextMeshProUGUI saveButton;
 
     [HideInInspector]
@@ -52,6 +53,11 @@ public class Menu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void ReloadScene()
+    {
+        TransitionToScene(SceneManager.GetActiveScene().name);
     }
 
     public void TransitionToScene(string sceneName)

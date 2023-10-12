@@ -11,6 +11,14 @@ public class Marble : MonoBehaviour
         //Debug.Log("Marble became invisible");
         Destroy(gameObject);    
     }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("End"))
+        {
+           Debug.Log("Marble collided with end");
+        }
+    }
 }
 
 
