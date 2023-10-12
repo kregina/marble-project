@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Menu : MonoBehaviour
 {
     public static Menu Instance { get; private set; }
     public Animator animator;
+    [SerializeField] private TextMeshProUGUI saveButton;
 
     [HideInInspector]
     public bool gameIsPaused;
@@ -34,6 +36,19 @@ public class Menu : MonoBehaviour
         gameIsPaused = true;
     }
 
+    public void Save()
+    {
+        saveButton.text = "Saving...";
+        GameManager.Instance.Save();
+        StartCoroutine(SaveIndicatorCoroutine());
+    }
+
+    private IEnumerator SaveIndicatorCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        saveButton.text = "Save";
+    }
+
     public void Quit()
     {
         Application.Quit();
@@ -41,7 +56,7 @@ public class Menu : MonoBehaviour
 
     public void TransitionToScene(string sceneName)
     {
-        if(gameIsPaused)
+        if (gameIsPaused)
         {
             Continue();
         }

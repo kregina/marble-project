@@ -29,15 +29,12 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int points)
     {
-        Debug.Log($"Adding {points} points to the score.");
-
         score += points;
 
         if (comboCount > 1)
         {
-            score += comboCount - 1;
-
-            Debug.Log($"comboCount: {comboCount} new score ${score}");
+            score += (comboCount * 2);
+            ResetComboCount();
         }
     }
 
@@ -48,6 +45,33 @@ public class GameManager : MonoBehaviour
 
     public void IncrementComboCount()
     {
-        comboCount++;
+        comboCount += 1;
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("Level", level);
+        PlayerPrefs.SetInt("Score", score);
+        PlayerPrefs.Save();
+    }
+
+    public void Load()
+    {
+        if (PlayerPrefs.HasKey("Level"))
+        {
+            level = PlayerPrefs.GetInt("Level");
+        }
+        else
+        {
+            level = 0;
+        }
+        if (PlayerPrefs.HasKey("Score"))
+        {
+            score = PlayerPrefs.GetInt("Score");
+        }
+        else
+        {
+            score = 0;
+        }
     }
 }

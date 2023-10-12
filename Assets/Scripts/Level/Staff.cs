@@ -20,7 +20,6 @@ public class Staff : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Staff Start");
         marbleColorManager = GameObject.FindWithTag("MarbleColorManager").GetComponent<MarbleColorManager>();
         marbleColorManager.OnAvailableColorAdded += OnFirstAvailableColor;
         marbleColorManager.OnAvailableColorRemoved += OnAvailableColorRemoved;

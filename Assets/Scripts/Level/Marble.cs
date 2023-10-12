@@ -8,7 +8,7 @@ public class Marble : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Debug.Log("Marble became invisible");
+        //Debug.Log("Marble became invisible");
         Destroy(gameObject);    
     }
 }

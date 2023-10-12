@@ -12,12 +12,16 @@ public class LevelInfo : MonoBehaviour
         if (GameManager.Instance == null)
         {
             Debug.LogError("GameManager instance is null.");
+            return;
         }
 
         if (levelText == null || scoreText == null)
         {
             Debug.LogError("TextMeshProUGUI references are not assigned in the inspector.");
+            return;
         }
+
+        GameManager.Instance.Load();
     }
 
     private void Update()

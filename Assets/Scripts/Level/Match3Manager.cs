@@ -15,6 +15,13 @@ public class Match3Manager : MonoBehaviour
     private void OnMarblesChanged(Wave wave, int originIndex)
     {
         Match3OrMoreColors(originIndex);
+
+        if (wave.marbles.Count == 0)
+        {
+            Debug.Log("Wave complete!");
+
+            Destroy(wave.pusher.gameObject);
+        }
     }
 
     private void Match3OrMoreColors(int originIndex)

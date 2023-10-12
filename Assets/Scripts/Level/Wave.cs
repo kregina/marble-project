@@ -72,7 +72,7 @@ public class Wave : MonoBehaviour
         marble.pathFollower = marble.GetComponent<PathFollower>();
         marble.pathFollower.pathCreator = pathCreator;
 
-        Debug.Log($"Inserting marble at index: {index}");
+        //Debug.Log($"Inserting marble at index: {index}");
         marbles.Insert(index, marble);
         marbleColorManager.AddColor(marble.color);
 
@@ -83,7 +83,7 @@ public class Wave : MonoBehaviour
 
     public void RemoveMarbleAt(Marble marble, int index)
     {
-        Debug.Log($"Removing marble at index: {index}");
+        //Debug.Log($"Removing marble at index: {index}");
         marbles.RemoveAt(index);
         marbleColorManager.RemoveColor(marble.color);
         Destroy(marble.gameObject);
@@ -99,21 +99,15 @@ public class Wave : MonoBehaviour
             var marble = marbles[startIndex + i];
             marbleColorManager.RemoveColor(marble.color);
             Destroy(marble.gameObject);
-
-            if (marbles.Count == 0)
-            {
-                Debug.Log("Wave complete!");
-                Destroy(marbles[startIndex + i].parentWave.pusher.gameObject);
-            }
         }
 
-        Debug.Log($"Removing marbles at range {startIndex} +{count}");
+        //Debug.Log($"Removing marbles at range {startIndex} +{count}");
         marbles.RemoveRange(startIndex, count);
 
         OnMarblesChanged(this, startIndex);
 
         int scoreIncrement = count * 1;
-        GameManager.Instance.AddScore(scoreIncrement);
         GameManager.Instance.IncrementComboCount();
+        GameManager.Instance.AddScore(scoreIncrement);
     }
 }
