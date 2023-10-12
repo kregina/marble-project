@@ -5,7 +5,7 @@ using UnityEngine;
 public class Match3Manager : MonoBehaviour
 {
     [SerializeField] private Wave wave;
-    // Use this for initialization
+
     void Start()
     {
         wave = GetComponent<Wave>();
@@ -13,12 +13,12 @@ public class Match3Manager : MonoBehaviour
     }
 
     private void OnMarblesChanged(Wave wave, int originIndex)
-    {        
+    {
         Match3OrMoreColors(originIndex);
     }
 
     private void Match3OrMoreColors(int originIndex)
-    {        
+    {
         Debug.Log($"Match3OrMoreColors {originIndex}");
         if (originIndex < 0 || originIndex >= wave.marbles.Count)
         {

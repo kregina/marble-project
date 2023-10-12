@@ -7,18 +7,16 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Wave : MonoBehaviour
 {
+    public Pusher pusherPrefab;
+    public event Action<Wave, int> OnMarblesChanged;
+    public float speed = .2f;
+
     [HideInInspector] public PathCreator pathCreator;
     [HideInInspector] public List<Marble> marbles = new();
     [HideInInspector] public Pusher pusher;
-    public Pusher pusherPrefab;
     [HideInInspector] public int marblesPerWave;
-    [HideInInspector] 
-    MarbleColorManager marbleColorManager;
 
-
-    public event Action<Wave, int> OnMarblesChanged;
-
-    public float speed = .2f;
+    private MarbleColorManager marbleColorManager;
 
     private float distanceTravelled;
 
@@ -26,7 +24,6 @@ public class Wave : MonoBehaviour
     {
         marbleColorManager = GameObject.FindWithTag("MarbleColorManager").GetComponent<MarbleColorManager>();
         Initialize();
-        //Move();
     }
 
     void Update()
@@ -73,7 +70,7 @@ public class Wave : MonoBehaviour
     {
         marble.parentWave = this;
         marble.pathFollower = marble.GetComponent<PathFollower>();
-        marble.pathFollower.pathCreator = pathCreator;        
+        marble.pathFollower.pathCreator = pathCreator;
 
         Debug.Log($"Inserting marble at index: {index}");
         marbles.Insert(index, marble);
@@ -92,6 +89,7 @@ public class Wave : MonoBehaviour
         Destroy(marble.gameObject);
 
         OnMarblesChanged(this, index);
+        // update score here
     }
 
     public void RemoveMarblesRange(int startIndex, int count)
@@ -101,11 +99,21 @@ public class Wave : MonoBehaviour
             var marble = marbles[startIndex + i];
             marbleColorManager.RemoveColor(marble.color);
             Destroy(marble.gameObject);
+
+            if (marbles.Count == 0)
+            {
+                Debug.Log("Wave complete!");
+                Destroy(marbles[startIndex + i].parentWave.pusher.gameObject);
+            }
         }
 
         Debug.Log($"Removing marbles at range {startIndex} +{count}");
         marbles.RemoveRange(startIndex, count);
 
         OnMarblesChanged(this, startIndex);
+
+        int scoreIncrement = count * 1;
+        GameManager.Instance.AddScore(scoreIncrement);
+        GameManager.Instance.IncrementComboCount();
     }
 }

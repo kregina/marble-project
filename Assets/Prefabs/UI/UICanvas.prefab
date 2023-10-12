@@ -693,7 +693,6 @@ GameObject:
   - component: {fileID: 4768856377065270003}
   - component: {fileID: 3495293694518718030}
   - component: {fileID: 1648565413992665823}
-  - component: {fileID: 7921629493125166394}
   m_Layer: 5
   m_Name: Level
   m_TagString: LevelText
@@ -819,19 +818,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7921629493125166394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2538345199981410844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 381063881da91cc45b2ef14d183eca19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelText: {fileID: 1648565413992665823}
 --- !u!1 &3009474738572309994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,6 +1859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1900593868201288982}
+  - component: {fileID: 724413499670645019}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
@@ -1903,6 +1890,20 @@ RectTransform:
   m_AnchoredPosition: {x: 7.999939, y: 0.000061035156}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &724413499670645019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5691126672810459875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381063881da91cc45b2ef14d183eca19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelText: {fileID: 1648565413992665823}
+  scoreText: {fileID: 2006675928049427653}
 --- !u!1 &6760171369052674320
 GameObject:
   m_ObjectHideFlags: 0

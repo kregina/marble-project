@@ -12,6 +12,6 @@ public class EnterLevel : MonoBehaviour
     {
         pauseButton.SetActive(false);
         Menu.Instance.TransitionToScene(sceneName);
-        GameManager.Instance.ChangeLevel(currentLevel);
+        GameManager.Instance.SetLevel(currentLevel);
     }
 }
