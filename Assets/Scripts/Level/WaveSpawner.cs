@@ -59,8 +59,14 @@ public class WaveSpawner : MonoBehaviour
 
     private void HandleCompletedWave(Wave wave)
     {
-        Debug.Log("Level complete");
         Destroy(wave.pusher.gameObject);
+        StartCoroutine(ClearLevelPanelCoroutine());
+
+    }
+
+    private IEnumerator ClearLevelPanelCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
         Menu.Instance.Pause();
         GameManager.Instance.SetLevel(GameManager.Instance.level + 1);
         clearLevelPanel.SetActive(true);

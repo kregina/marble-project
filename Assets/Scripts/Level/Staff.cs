@@ -10,6 +10,7 @@ public class Staff : MonoBehaviour
 
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private float colorCooldown = 1f;
+    [SerializeField] private AudioSource fireSound;
 
     public ObservableCollection<MarbleColor> staffColors = new();
 
@@ -23,6 +24,8 @@ public class Staff : MonoBehaviour
         marbleColorManager = GameObject.FindWithTag("MarbleColorManager").GetComponent<MarbleColorManager>();
         marbleColorManager.OnAvailableColorAdded += OnFirstAvailableColor;
         marbleColorManager.OnAvailableColorRemoved += OnAvailableColorRemoved;
+
+        fireSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -99,6 +102,7 @@ public class Staff : MonoBehaviour
         staffColors.RemoveAt(0);
 
         InstantiateAndSetupProjectile(marblePrefab);
+        fireSound.Play();
 
         StopCoroutine(reloadColorsCoroutine);
         reloadColorsCoroutine = StartCoroutine(ReloadColorsCoroutine());
