@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
+    [SerializeField] private GameObject uiPanel;
+
     public PathCreator pathCreator;
     public Wave wavePrefab;
 
     public int waveCount = 1;
     public int marblesPerWave = 10;
     public int waveIntervalSeconds = 30;
-
-    [Header("ClearLevelPanel")]
-    [SerializeField] private GameObject clearLevelPanel;
 
     private int completedWaves = 0;
 
@@ -61,14 +60,13 @@ public class WaveSpawner : MonoBehaviour
     {
         Destroy(wave.pusher.gameObject);
         StartCoroutine(ClearLevelPanelCoroutine());
-
     }
 
     private IEnumerator ClearLevelPanelCoroutine()
     {
         yield return new WaitForSeconds(1f);
-        Menu.Instance.Pause();
-        GameManager.Instance.SetLevel(GameManager.Instance.level + 1);
-        clearLevelPanel.SetActive(true);
+        GameManager.Instance.SetLevel(GameManager.Instance.Level + 1);
+        GameManager.Instance.LevelCleared();
+        uiPanel.SetActive(true);
     }
 }

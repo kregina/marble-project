@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2187767116068347279}
   - component: {fileID: 3569628194781129013}
   - component: {fileID: 1140565652609035857}
-  - component: {fileID: 8374110683445904587}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -37,7 +36,7 @@ RectTransform:
   - {fileID: 1900593868201288982}
   - {fileID: 8279425249749068129}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -107,20 +106,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8374110683445904587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 144131239899097729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f6936dc81a8b944d9dd32923e9d3081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 6637305223387288511}
-  gameIsPaused: 0
 --- !u!1 &202827029595387172
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2847374615230458330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1128,7 +1113,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8374110683445904587}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
         m_MethodName: TransitionToScene
         m_Mode: 5
@@ -1412,7 +1397,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -1546,17 +1531,65 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8374110683445904587}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: TransitionToScene
-        m_Mode: 5
+      - m_Target: {fileID: 6760171369052674320}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Map
+          m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: StaffPathFollower, Assembly-CSharp
+        m_MethodName: ToggleMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 5691126672810459875}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8782032887599568355}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &4622722118061303554
 GameObject:
@@ -1645,9 +1678,10 @@ GameObject:
   - component: {fileID: 4719601711559024383}
   - component: {fileID: 8062473696935014008}
   - component: {fileID: 1194305751900156555}
+  - component: {fileID: 5012531757471745070}
   m_Layer: 5
   m_Name: Menu
-  m_TagString: Untagged
+  m_TagString: Menu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1714,6 +1748,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5012531757471745070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4737129556154494072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39b87c6c540ac24789f334d1a80a244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveButton: {fileID: 0}
+  gameTitle: {fileID: 1986729249585534084}
+  menuHeader: {fileID: 8745373058696858118}
 --- !u!1 &5476555821552608336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1859,14 +1908,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1900593868201288982}
-  - component: {fileID: 724413499670645019}
+  - component: {fileID: 5635911081169811280}
   m_Layer: 5
   m_Name: Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1900593868201288982
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1890,7 +1939,7 @@ RectTransform:
   m_AnchoredPosition: {x: 7.999939, y: 0.000061035156}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &724413499670645019
+--- !u!114 &5635911081169811280
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1899,7 +1948,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5691126672810459875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 381063881da91cc45b2ef14d183eca19, type: 3}
+  m_Script: {fileID: 11500000, guid: 099463e8e12d1c74da4d20051a16cdc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelText: {fileID: 1648565413992665823}
@@ -2151,11 +2200,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 8782032887599568355}
-    - target: {fileID: 1319602327692483962, guid: a20f8bc6b7d68ed488af8bd1ba040f23,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 8374110683445904587}
     - target: {fileID: 1319602327692483962, guid: a20f8bc6b7d68ed488af8bd1ba040f23,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState

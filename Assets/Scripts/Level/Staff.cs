@@ -18,29 +18,20 @@ public class Staff : MonoBehaviour
     private Marble projectile;
     private Coroutine reloadColorsCoroutine;
 
-
     private void Start()
     {
+        fireSound = GetComponent<AudioSource>();
+
         marbleColorManager = GameObject.FindWithTag("MarbleColorManager").GetComponent<MarbleColorManager>();
         marbleColorManager.OnAvailableColorAdded += OnFirstAvailableColor;
         marbleColorManager.OnAvailableColorRemoved += OnAvailableColorRemoved;
-
-        fireSound = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        if (Menu.Instance.gameIsPaused)
-        {
-            return;
-        }
+        if(GameManager.Instance.GameIsPaused) return;
 
         LookAtMouse();
-
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -118,6 +109,4 @@ public class Staff : MonoBehaviour
         projectile.tag = "Projectile";
         projectile.GetComponent<PathFollower>().enabled = false;
     }
-
-
 }

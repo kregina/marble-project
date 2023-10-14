@@ -11,6 +11,9 @@ TagManager:
   - LevelText
   - LevelManager
   - End
+  - GameManager
+  - Menu
+  - SceneTransition
   layers:
   - Default
   - TransparentFX

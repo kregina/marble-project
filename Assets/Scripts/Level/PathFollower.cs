@@ -20,7 +20,7 @@ public class PathFollower : MonoBehaviour
 
         if (targetDistance >= pathCreator.path.length)
         {
-            LevelManager.Instance.Lose();
+            GameManager.Instance.GameOver();
             return;
         }
     }

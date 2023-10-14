@@ -1,13 +1,17 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
-    public int level { get; private set; } = 0;
-    public int score { get; private set; } = 0;
-    public int comboCount { get; private set; } = 0;
+    public int Level { get; private set; }
+    public int Score { get; private set; }
+    public int TempScore { get; private set; }
+    public int ComboCount { get; private set; }
+    public bool GameIsPaused { get; private set; }
+    public bool GameIsOver { get; private set; }
+    public bool GameIsLevelCleared { get; private set; }
 
     private void Awake()
     {
@@ -22,36 +26,68 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetLevel(int newLevel)
+    public void LevelCleared()
     {
-        level = newLevel;
+        GameIsLevelCleared = true;
+        Save();
     }
 
-    public void AddScore(int points)
+    public void GameOver()
     {
-        score += points;
+        GameIsOver = true;
+        TempScore = Score;
+    }
 
-        if (comboCount > 1)
+    public void SetLevel(int newLevel)
+    {
+        Level = newLevel;
+    }
+
+    public void SetScore(int newScore)
+    {
+        if (ComboCount > 1)
         {
-            score += (comboCount * 2);
+            TempScore += (ComboCount * 2) + newScore;
             ResetComboCount();
+        }
+        else
+        {
+            TempScore += newScore;
         }
     }
 
     public void ResetComboCount()
     {
-        comboCount = 0;
+        ComboCount = 0;
     }
 
-    public void IncrementComboCount()
+    public void SetComboCount()
     {
-        comboCount += 1;
+        ComboCount += 1;
+    }
+
+    public void Continue()
+    {
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+    }
+
+    public void Lose()
+    {
+        ResetComboCount();
     }
 
     public void Save()
     {
-        PlayerPrefs.SetInt("Level", level);
-        PlayerPrefs.SetInt("Score", score);
+        Score = TempScore;
+        PlayerPrefs.SetInt("Level", Level);
+        PlayerPrefs.SetInt("Score", Score);
         PlayerPrefs.Save();
     }
 
@@ -59,19 +95,21 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Level"))
         {
-            level = PlayerPrefs.GetInt("Level");
+            Level = PlayerPrefs.GetInt("Level");
         }
         else
         {
-            level = 0;
+            Level = 0;
         }
         if (PlayerPrefs.HasKey("Score"))
         {
-            score = PlayerPrefs.GetInt("Score");
+            Score = PlayerPrefs.GetInt("Score");
+            TempScore = Score;
         }
         else
         {
-            score = 0;
+            Score = 0;
+            TempScore = 0;
         }
     }
 }

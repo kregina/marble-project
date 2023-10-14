@@ -15,7 +15,6 @@ public class Wave : MonoBehaviour
     [HideInInspector] public int marblesPerWave;
 
     private MarbleColorManager marbleColorManager;
-
     private float distanceTravelled;
 
     private void Start()
@@ -105,7 +104,7 @@ public class Wave : MonoBehaviour
         OnMarblesChanged(this, startIndex);
 
         int scoreIncrement = count * 1;
-        GameManager.Instance.IncrementComboCount();
-        GameManager.Instance.AddScore(scoreIncrement);
+        GameManager.Instance.SetComboCount();
+        GameManager.Instance.SetScore(scoreIncrement);
     }
 }
