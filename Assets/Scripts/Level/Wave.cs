@@ -8,6 +8,7 @@ public class Wave : MonoBehaviour
     public Pusher pusherPrefab;
     public event Action<Wave, int> OnMarblesChanged;
     public float speed = .2f;
+    public float wavePushBackOnMatch = 2f;
 
     [HideInInspector] public PathCreator pathCreator;
     [HideInInspector] public List<Marble> marbles = new();
@@ -83,7 +84,7 @@ public class Wave : MonoBehaviour
         //Debug.Log($"Removing marble at index: {index}");
         marbles.RemoveAt(index);
         marbleColorManager.RemoveColor(marble.color);
-        Destroy(marble.gameObject);
+        Destroy(marble.gameObject, 0.1f);
 
         OnMarblesChanged(this, index);
         // update score here
@@ -95,7 +96,7 @@ public class Wave : MonoBehaviour
         {
             var marble = marbles[startIndex + i];
             marbleColorManager.RemoveColor(marble.color);
-            Destroy(marble.gameObject);
+            Destroy(marble.gameObject, 0.1f);
         }
 
         //Debug.Log($"Removing marbles at range {startIndex} +{count}");
@@ -106,5 +107,7 @@ public class Wave : MonoBehaviour
         int scoreIncrement = count * 1;
         GameManager.Instance.SetComboCount();
         GameManager.Instance.SetScore(scoreIncrement);
+
+        distanceTravelled = Math.Max(0, distanceTravelled - wavePushBackOnMatch);
     }
 }

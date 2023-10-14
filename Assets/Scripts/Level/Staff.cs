@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -36,6 +38,20 @@ public class Staff : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Fire();
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            SwapCollors();
+        }
+    }
+
+    private void SwapCollors()
+    {        
+        if (staffColors.Count == 2)
+        {
+            var temp = staffColors[0];
+            staffColors[0] = staffColors[1];
+            staffColors[1] = temp;
         }
     }
 

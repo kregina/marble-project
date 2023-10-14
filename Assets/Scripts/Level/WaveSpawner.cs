@@ -58,7 +58,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void HandleCompletedWave(Wave wave)
     {
-        Destroy(wave.pusher.gameObject);
+        Destroy(wave.pusher.gameObject, 0.1f);
         StartCoroutine(ClearLevelPanelCoroutine());
     }
 

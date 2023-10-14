@@ -20,7 +20,7 @@ public class StaffPathFollower : MonoBehaviour
         if(distanceTravelled >= pathCreator.path.length)
         {
             StopMovement();
-            staffPrefab.GetComponent<Floating>().enabled = true;
+            //staffPrefab.GetComponent<Floating>().enabled = true;
         }
     }
 
@@ -44,7 +44,7 @@ public class StaffPathFollower : MonoBehaviour
             for (float time = 0; time < transitionDuration; time += Time.deltaTime)
             {
                 float t = time / transitionDuration;
-                transposer.m_FollowOffset = Vector3.Lerp(currentOffset, targetOffset, t);
+                transposer.m_FollowOffset = Vector3.Slerp(currentOffset, targetOffset, t);
                 yield return null;
             }
             transposer.m_FollowOffset = targetOffset;
@@ -53,16 +53,25 @@ public class StaffPathFollower : MonoBehaviour
         if (isAddingOffset)
         {
             yield return new WaitForSeconds(0.5f);
-            StartCoroutine(MoveAlongPath());
             staffPrefab.SetActive(true);
+            StartCoroutine(MoveAlongPath());
         }
     }
 
     private IEnumerator MoveAlongPath()
     {
+        var startDistance = 0;
+        var targetDistance = pathCreator.path.length;
+        var startTime = Time.time;
+        var duration = 3f;
+
+        var aaa = pathCreator.path.GetPointAtDistance(0, endOfPathInstruction);
+        Debug.Log(aaa);
+
         while (pathCreator != null)
-        {
-            distanceTravelled += speed * Time.deltaTime;
+        {            
+            float t = (Time.time - startTime) / duration;
+            distanceTravelled = Mathf.SmoothStep(startDistance, targetDistance, t);
             transform.position = pathCreator.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
             yield return null;
         }

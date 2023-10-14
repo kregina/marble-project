@@ -5,10 +5,12 @@ using TMPro;
 public class Menu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI saveButton;
-
+    [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameObject uiPanel;
 
     public void Continue()
     {
+        ToggleUI();
         GameManager.Instance.Continue();
     }
 
@@ -22,6 +24,12 @@ public class Menu : MonoBehaviour
         saveButton.text = "Saving...";
         GameManager.Instance.Save();
         StartCoroutine(SaveIndicatorCoroutine());
+    }
+
+    private void ToggleUI()
+    {
+        pauseButton.SetActive(true);
+        uiPanel.SetActive(false);
     }
 
     private IEnumerator SaveIndicatorCoroutine()

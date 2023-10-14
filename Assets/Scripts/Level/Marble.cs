@@ -12,7 +12,7 @@ public class Marble : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Destroy(gameObject);    
+        Destroy(gameObject, .1f);    
     }
 
     private void OnTriggerEnter(Collider collision)
