@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class PathFollower : MonoBehaviour
 {
-    [HideInInspector]
-    public PathCreator pathCreator { get; set; }
-    public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Stop;
+    [HideInInspector] public PathCreator pathCreator { get; set; }
 
+    public EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Stop;
     public float targetDistance;
-    public float smoothTime = 1f; // time to reach target
-    public float smoothMaxSpeed = 50f; //projectile speed
+    public float smoothTime = 1f;
+    public float smoothMaxSpeed = 50f;
 
     private Vector3 currentVelocityPosition = Vector3.zero;
     private float currentVelocityRotation = 0;

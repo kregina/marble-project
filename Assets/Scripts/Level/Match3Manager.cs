@@ -5,9 +5,12 @@ using UnityEngine;
 public class Match3Manager : MonoBehaviour
 {
     [SerializeField] private Wave wave;
+    
+    private AudioSource explosionSound;
 
     void Start()
     {
+        explosionSound = GetComponent<AudioSource>();
         wave = GetComponent<Wave>();
         wave.OnMarblesChanged += OnMarblesChanged;
     }
@@ -19,7 +22,6 @@ public class Match3Manager : MonoBehaviour
 
     private void Match3OrMoreColors(int originIndex)
     {
-        Debug.Log($"Match3OrMoreColors {originIndex}");
         if (originIndex < 0 || originIndex >= wave.marbles.Count)
         {
             return;
@@ -35,6 +37,7 @@ public class Match3Manager : MonoBehaviour
     private IEnumerator RemoveMarblesAfterDelay(int startIndex, int count, float delay)
     {
         yield return new WaitForSeconds(delay);
+        explosionSound.PlayOneShot(explosionSound.clip);
         wave.RemoveMarblesRange(startIndex, count);
     }
 
@@ -56,8 +59,6 @@ public class Match3Manager : MonoBehaviour
         }
 
         var count = rightIndex - leftIndex + 1;
-
-        Debug.Log($"findMatchesStartingAt originIndex: {originIndex}, count: {count}, leftIndex: {leftIndex}, rightIndex: {rightIndex} ");
 
         return (count, startIndex: leftIndex);
     }

@@ -70,6 +70,16 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         GameIsPaused = false;
+
+        if (GameIsOver)
+        {
+            GameIsOver = false;
+            TempScore = 0;
+        }
+        else if (GameIsLevelCleared)
+        {
+            GameIsLevelCleared = false;
+        }
     }
 
     public void Pause()

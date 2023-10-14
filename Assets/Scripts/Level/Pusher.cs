@@ -5,8 +5,17 @@ public class Pusher : MonoBehaviour
     [HideInInspector] public PathFollower pathFollower;
     [HideInInspector] public Wave parentWave;
 
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Push start");
+        if (other.gameObject.CompareTag("Marble"))
+        {
+            var otherMarble = other.gameObject.GetComponent<Marble>();
+
+            if (otherMarble.parentWave != null && parentWave != otherMarble.parentWave)
+            {
+                Debug.Log("Merge waves");
+                otherMarble.parentWave.MergeWaves(parentWave);
+            }
+        }
     }
 }

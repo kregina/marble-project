@@ -10,7 +10,7 @@ public class WaveSpawner : MonoBehaviour
     public PathCreator pathCreator;
     public Wave wavePrefab;
 
-    public int waveCount = 1;
+    public int waveCount = 3;
     public int marblesPerWave = 10;
     public int waveIntervalSeconds = 30;
 
@@ -34,6 +34,7 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnWave()
     {
+        Debug.Log("Spawning wave");
         var newWave = Instantiate(wavePrefab);
         newWave.pathCreator = pathCreator;
         newWave.marblesPerWave = marblesPerWave;
@@ -47,19 +48,16 @@ public class WaveSpawner : MonoBehaviour
     {
         if (wave.marbles.Count == 0)
         {
+            Debug.Log("Wave completed");
+            //Destroy(wave.pusher.gameObject, 0.01f);
+            Destroy(wave.gameObject, 0.01f);
             completedWaves++;
-        }
+        }        
 
         if (completedWaves == waveCount)
         {
-            HandleCompletedWave(wave);
+            StartCoroutine(ClearLevelPanelCoroutine());
         }
-    }
-
-    private void HandleCompletedWave(Wave wave)
-    {
-        Destroy(wave.pusher.gameObject, 0.1f);
-        StartCoroutine(ClearLevelPanelCoroutine());
     }
 
     private IEnumerator ClearLevelPanelCoroutine()

@@ -13,7 +13,6 @@ public class StaffParticles : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("StaffParticles Start");
         staff = GetComponent<Staff>();
         staff.staffColors.CollectionChanged += (_, _) => UpdateStaffColors();
 
@@ -37,7 +36,6 @@ public class StaffParticles : MonoBehaviour
 
     private void UpdateStaffColors()
     {
-        Debug.Log("UpdateStaffColors");
         MarbleColor? primaryColor = staff.staffColors.Count > 0 ? staff.staffColors[0] : null;
         foreach (var particle in primaryParticles)
         {

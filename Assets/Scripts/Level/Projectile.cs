@@ -6,12 +6,9 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody rb;
     private Marble marble;
-    private SphereCollider marbleCollider;
 
     private void Start()
     {
-        Debug.Log("Projectile start");
-        marbleCollider = GetComponent<SphereCollider>();
         marble = GetComponent<Marble>();
 
         rb = GetComponent<Rigidbody>();
@@ -25,11 +22,13 @@ public class Projectile : MonoBehaviour
     {        
         if (hasCollidedBefore) return;
 
-        if (collision.gameObject.CompareTag("Marble") || collision.gameObject.CompareTag("Pusher"))
+        if (collision.gameObject.CompareTag("Marble"))
         {
-            Debug.Log($"OnCollisionEnter tag: {tag}");
             hasCollidedBefore = true;
-            HandleCollisionWithMarbleOrPusher(collision);
+            Marble otherMarble = collision.gameObject.GetComponent<Marble>();
+            var otherMarbleIndex = otherMarble.parentWave.marbles.IndexOf(otherMarble);
+            var insertIndex = DidHitOnTheFront(collision) ? otherMarbleIndex + 1 : otherMarbleIndex;
+            otherMarble.parentWave.InsertMarbleAt(marble, insertIndex);
             StopProjectile();
         }
         else
@@ -38,22 +37,20 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void HandleCollisionWithMarbleOrPusher(Collision collision)
-    {        
-        if (collision.gameObject.CompareTag("Marble"))
+    private void OnTriggerEnter(Collider other)
+    {
+        if (hasCollidedBefore) return;
+
+        if (other.gameObject.CompareTag("Pusher"))
         {
-            tag = "Marble";
-            Marble otherMarble = collision.gameObject.GetComponent<Marble>();
-            var otherMarbleIndex = otherMarble.parentWave.marbles.IndexOf(otherMarble);
-            var insertIndex = DidHitOnTheFront(collision) ? otherMarbleIndex + 1 : otherMarbleIndex;
-            otherMarble.parentWave.InsertMarbleAt(marble, insertIndex);
-        }
-        else if (collision.gameObject.CompareTag("Pusher"))
-        {
-            tag = "Marble";
-            Pusher pusher = collision.gameObject.GetComponent<Pusher>();
-            Debug.Log($"Hit Pusher. ParentWaveCount: {pusher.parentWave.marbles.Count}");
+            hasCollidedBefore = true;
+            Pusher pusher = other.gameObject.GetComponent<Pusher>();
             pusher.parentWave.InsertMarbleAt(marble, 0);
+            StopProjectile();
+        }
+        else
+        {
+            Debug.Log($"Hit something else {other.gameObject.name}");
         }
     }
 
@@ -73,12 +70,10 @@ public class Projectile : MonoBehaviour
 
         if (dotProduct > 0)
         {
-            Debug.Log("Hit on the front " + collision.gameObject.name);
             return true;
         }
         else
         {
-            Debug.Log("Hit on the back " + collision.gameObject.name);
             return false;
         }
     }

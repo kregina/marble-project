@@ -18467,6 +18467,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 144131239899097729, guid: 392494c153028214baab6e02101e4664,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 202827029595387172, guid: 392494c153028214baab6e02101e4664,
         type: 3}
       propertyPath: m_Name
@@ -37031,11 +37036,10 @@ MonoBehaviour:
   pathCreator: {fileID: 1109178944}
   wavePrefab: {fileID: 4470484570226922064, guid: afb33136dd716744aa612320c511137d,
     type: 3}
-  waveCount: 1
+  waveCount: 3
   marblesPerWave: 10
-  waveIntervalSeconds: 30
-  waves:
-  - {fileID: 0}
+  waveIntervalSeconds: 10
+  waves: []
 --- !u!4 &911007646
 Transform:
   m_ObjectHideFlags: 0
@@ -45929,9 +45933,12 @@ MonoBehaviour:
       - {x: 4.759367, y: 1.5302432, z: 12.927221}
       - {x: 5.7274313, y: 1.7450118, z: 13.617736}
       - {x: 6.081665, y: 1.0818872, z: 14.006561}
-      - {x: 6.487747, y: 0.15658164, z: 13.787506}
-      - {x: 6.825241, y: -0.99643314, z: 13.039917}
-      - {x: 7.1477814, y: -2.384253, z: 12.567047}
+      - {x: 6.3930526, y: 0.37235427, z: 13.838588}
+      - {x: 6.6907525, y: -0.57455343, z: 13.315339}
+      - {x: 6.9456635, y: -1.5550703, z: 12.887985}
+      - {x: 7.0231833, y: -1.8532505, z: 12.758025}
+      - {x: 6.906308, y: -6.4280415, z: 12.915536}
+      - {x: 6.9815216, y: -6.751668, z: 12.805267}
       isClosed: 0
       space: 0
       controlMode: 2
@@ -45941,6 +45948,7 @@ MonoBehaviour:
         m_Center: {x: -5.4334874, y: 0.18948638, z: 12.532949}
         m_Extent: {x: 21.223892, y: 2.6460018, z: 14.909231}
       perAnchorNormalsAngle:
+      - 0
       - 0
       - 0
       - 0

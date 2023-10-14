@@ -68,7 +68,6 @@ public class Staff : MonoBehaviour
             yield return new WaitForSeconds(colorCooldown);
             if (marbleColorManager.availableColors.Count == 0)
             {
-                Debug.Log("No colors available");
                 yield break;
             }
             var marbleColor = marbleColorManager.GetRandomAvailableMarbleColor();
@@ -122,7 +121,6 @@ public class Staff : MonoBehaviour
         projectile.transform.rotation = spawnPoint.transform.rotation;
 
         projectile.AddComponent<Projectile>();
-        projectile.tag = "Projectile";
         projectile.GetComponent<PathFollower>().enabled = false;
     }
 }

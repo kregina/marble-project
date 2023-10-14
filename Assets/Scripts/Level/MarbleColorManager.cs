@@ -9,10 +9,10 @@ public class MarbleColorManager : MonoBehaviour
 
     public event Action<MarbleColor> OnAvailableColorAdded;
     public event Action<MarbleColor> OnAvailableColorRemoved;
-
-    Dictionary<MarbleColor, int> colorCount = new();
-
     public ICollection<MarbleColor> availableColors => colorCount.Keys;
+
+    private Dictionary<MarbleColor, int> colorCount = new();
+
 
     public void AddColor(MarbleColor color)
     {
