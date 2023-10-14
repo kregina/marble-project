@@ -7,6 +7,9 @@ public class MarbleColorManager : MonoBehaviour
 {
     [SerializeField] private Marble[] marblePrefabs;
 
+    public event Action<MarbleColor> OnFirstColorAvailable;
+    public event Action OnNoColorsAvailable;
+
     public event Action<MarbleColor> OnAvailableColorAdded;
     public event Action<MarbleColor> OnAvailableColorRemoved;
     public ICollection<MarbleColor> availableColors => colorCount.Keys;
@@ -20,7 +23,14 @@ public class MarbleColorManager : MonoBehaviour
 
         if (colorCount[color] == 1)
         {
-            OnAvailableColorAdded?.Invoke(color);
+            if(colorCount.Count == 1)
+            {
+                OnFirstColorAvailable?.Invoke(color);
+            }
+            else
+            {
+                OnAvailableColorAdded?.Invoke(color);
+            }            
         }
     }
 
@@ -31,7 +41,15 @@ public class MarbleColorManager : MonoBehaviour
         if (colorCount[color] == 0)
         {
             colorCount.Remove(color);
-            OnAvailableColorRemoved?.Invoke(color);
+
+            if(colorCount.Count == 0)
+            {
+                OnNoColorsAvailable?.Invoke();
+            }
+            else
+            {
+                OnAvailableColorRemoved?.Invoke(color);
+            }            
         }   
     }
 
@@ -42,6 +60,10 @@ public class MarbleColorManager : MonoBehaviour
 
     public MarbleColor GetRandomAvailableMarbleColor()
     {
+        if(availableColors.Count == 0)
+        {
+            throw new Exception("No available colors");
+        }
         return availableColors.ElementAt(UnityEngine.Random.Range(0, availableColors.Count - 1));
     }
 

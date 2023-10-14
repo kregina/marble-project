@@ -7,7 +7,7 @@ using UnityEngine;
 public class Wave : MonoBehaviour
 {
     public Pusher pusherPrefab;
-    public event Action<Wave, int> OnMarblesChanged;
+    public event Action<Wave, int, bool> OnMarblesChanged;
     public float speed = .2f;
     public float wavePushBackOnMatch = 2f;
 
@@ -65,7 +65,7 @@ public class Wave : MonoBehaviour
         }
     }
 
-    public void InsertMarbleAt(Marble marble, int index)
+    public void InsertMarbleAt(Marble marble, int index, bool isTriggeredByPlayer)
     {
         marble.parentWave = this;
         marble.pathFollower = marble.GetComponent<PathFollower>();
@@ -76,10 +76,10 @@ public class Wave : MonoBehaviour
 
         UpdateDistanceTraveledOnChildren();
 
-        OnMarblesChanged(this, index);
+        OnMarblesChanged(this, index, isTriggeredByPlayer);
     }
 
-    public void InsertMarblesRangeAt(ICollection<Marble> marblesToInsert, int index)
+    public void InsertMarblesRangeAt(ICollection<Marble> marblesToInsert, int index, bool isTriggeredByPlayer)
     {
         foreach (var marble in marblesToInsert)
         {
@@ -94,33 +94,35 @@ public class Wave : MonoBehaviour
 
         UpdateDistanceTraveledOnChildren();
 
-        OnMarblesChanged(this, index);
+        OnMarblesChanged(this, index, isTriggeredByPlayer);
     }
 
-    public void RemoveMarblesRange(int startIndex, int count)
+    public void RemoveMarblesRange(int startIndex, int count, bool isTriggeredByPlayer)
     {
         for (int i = 0; i < count; i++)
         {
             var marble = marbles[startIndex + i];
             marbleColorManager.RemoveColor(marble.color);
-            Destroy(marble.gameObject, 0.01f);
+            marble.gameObject.SetActive(false);
         }
 
         marbles.RemoveRange(startIndex, count);
 
-        OnMarblesChanged(this, startIndex);
-
-        int scoreIncrement = count * 1;
-        GameManager.Instance.SetComboCount();
-        GameManager.Instance.SetScore(scoreIncrement);
+        OnMarblesChanged(this, startIndex, isTriggeredByPlayer);        
 
         distanceTravelled = Math.Max(0, distanceTravelled - wavePushBackOnMatch);
     }
 
     public void MergeWaves(Wave otherWave)
     {
-        InsertMarblesRangeAt(otherWave.marbles, marbles.Count - 1);
+        InsertMarblesRangeAt(otherWave.marbles, marbles.Count - 1, false);
         otherWave.marbles.Clear();
-        otherWave.OnMarblesChanged(otherWave, 0);
+        otherWave.OnMarblesChanged(otherWave, 0, false);
+    }
+
+    private void OnDisable()
+    {
+        Destroy(pusher.gameObject, .1f);
+        Destroy(gameObject, .1f);
     }
 }

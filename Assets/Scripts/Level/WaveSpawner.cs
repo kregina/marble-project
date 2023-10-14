@@ -16,19 +16,22 @@ public class WaveSpawner : MonoBehaviour
 
     private int completedWaves = 0;
 
+    private Coroutine spawnWaveCoroutine;
+
     [SerializeField] private List<Wave> waves = new List<Wave>();
 
     void Start()
     {
-        StartCoroutine(SpawnWaveCoroutine());
+        spawnWaveCoroutine = StartCoroutine(SpawnWaveCoroutine());
     }
 
     IEnumerator SpawnWaveCoroutine()
     {
-        for (int i = 0; i < waveCount; i++)
+        if(completedWaves < waveCount)
         {
             SpawnWave();
             yield return new WaitForSeconds(waveIntervalSeconds);
+            yield return spawnWaveCoroutine = StartCoroutine(SpawnWaveCoroutine());
         }
     }
 
@@ -44,20 +47,25 @@ public class WaveSpawner : MonoBehaviour
         waves.Add(newWave);
     }
 
-    void OnMarblesChanged(Wave wave, int originIndex)
+    void OnMarblesChanged(Wave wave, int originIndex, bool isTriggeredByPlayer)
     {
         if (wave.marbles.Count == 0)
         {
             Debug.Log("Wave completed");
-            //Destroy(wave.pusher.gameObject, 0.01f);
-            Destroy(wave.gameObject, 0.01f);
+            wave.gameObject.SetActive(false);
+            waves.Remove(wave);
             completedWaves++;
-        }        
 
-        if (completedWaves == waveCount)
-        {
-            StartCoroutine(ClearLevelPanelCoroutine());
-        }
+            if (completedWaves >= waveCount)
+            {
+                StartCoroutine(ClearLevelPanelCoroutine());
+            }
+            else if (waves.Count == 0)
+            {
+                StopCoroutine(spawnWaveCoroutine);
+                spawnWaveCoroutine = StartCoroutine(SpawnWaveCoroutine());
+            }
+        }        
     }
 
     private IEnumerator ClearLevelPanelCoroutine()

@@ -49,7 +49,7 @@ MonoBehaviour:
   pusherPrefab: {fileID: 4376934883381131813, guid: d7af9d9d8c25cda4caf70841172cf500,
     type: 3}
   speed: 3
-  wavePushBackOnMatch: 2
+  wavePushBackOnMatch: 3
   pathCreator: {fileID: 0}
   marbles: []
   pusher: {fileID: 4376934883381131813, guid: d7af9d9d8c25cda4caf70841172cf500, type: 3}

@@ -8,17 +8,15 @@ public class LevelInfo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI gameTitle;
     [SerializeField] private TextMeshProUGUI menuHeader;
+    [SerializeField] private TextMeshProUGUI moreLevelsText;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button tryAgainButton;
-    [SerializeField] private Button pauseButton;
     [SerializeField] private GameObject uiPanel;
-
-    private SceneTransition sceneTransition;
 
     void Start()
     {
-        sceneTransition = GameObject.FindWithTag("SceneTransition").GetComponent<SceneTransition>();
         GameManager.Instance.Load();
+        uiPanel.SetActive(false);
     }
 
     private void Update()
@@ -28,28 +26,26 @@ public class LevelInfo : MonoBehaviour
 
         if (GameManager.Instance.GameIsOver)
         {
-            GameIsOver();
+            gameTitle.text = "Game Over!!!";
+            menuHeader.text = "Menu";
+
+            uiPanel.SetActive(true);
+            continueButton.gameObject.SetActive(false);
+            tryAgainButton.gameObject.SetActive(true);
         }
         else if (GameManager.Instance.GameIsLevelCleared)
         {
             gameTitle.text = "Level Cleared!!!";
-            HandleUI();
+            menuHeader.text = "Menu";
+            uiPanel.SetActive(true);
+
+            continueButton.gameObject.SetActive(false);
+            moreLevelsText.gameObject.SetActive(true);
         }
     }
 
-    private void GameIsOver()
+    private void OnDestroy()
     {
-        gameTitle.text = "Game Over!!!";
-        menuHeader.text = "Menu";
-
-        continueButton.gameObject.SetActive(false);
-        tryAgainButton.gameObject.SetActive(true);
-        HandleUI();
-    }
-
-    private void HandleUI()
-    {
-        pauseButton.gameObject.SetActive(false);
-        uiPanel.SetActive(true);
+        uiPanel.SetActive(false);
     }
 }

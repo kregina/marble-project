@@ -23,7 +23,12 @@ public class Menu : MonoBehaviour
     {
         saveButton.text = "Saving...";
         GameManager.Instance.Save();
-        StartCoroutine(SaveIndicatorCoroutine());
+        saveButton.text = "Save";
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     private void ToggleUI()
@@ -31,11 +36,4 @@ public class Menu : MonoBehaviour
         pauseButton.SetActive(true);
         uiPanel.SetActive(false);
     }
-
-    private IEnumerator SaveIndicatorCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
-        saveButton.text = "Save";
-    }
-
 }

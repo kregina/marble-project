@@ -12,10 +12,10 @@ public class Staff : MonoBehaviour
 
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private float colorCooldown = 1f;
-    [SerializeField] private AudioSource fireSound;
 
     public ObservableCollection<MarbleColor> staffColors = new();
 
+    private AudioSource fireSound;
     private MarbleColorManager marbleColorManager;
     private Marble projectile;
     private Coroutine reloadColorsCoroutine;
@@ -25,8 +25,11 @@ public class Staff : MonoBehaviour
         fireSound = GetComponent<AudioSource>();
 
         marbleColorManager = GameObject.FindWithTag("MarbleColorManager").GetComponent<MarbleColorManager>();
-        marbleColorManager.OnAvailableColorAdded += OnFirstAvailableColor;
+        marbleColorManager.OnFirstColorAvailable += OnFirstAvailableColor;
         marbleColorManager.OnAvailableColorRemoved += OnAvailableColorRemoved;
+        marbleColorManager.OnNoColorsAvailable += OnNoColorsAvailable;
+
+        reloadColorsCoroutine = StartCoroutine(ReloadColorsCoroutine());
     }
 
     void Update()
@@ -57,21 +60,31 @@ public class Staff : MonoBehaviour
 
     private void OnFirstAvailableColor(MarbleColor _)
     {
+        Debug.Log("OnFirstAvailableColor");
+        StopCoroutine(reloadColorsCoroutine);
         reloadColorsCoroutine = StartCoroutine(ReloadColorsCoroutine());
-        marbleColorManager.OnAvailableColorAdded -= OnFirstAvailableColor;
+    }
+
+    private void OnNoColorsAvailable()
+    {
+        Debug.Log("OnNoColorsAvailable");
+        StopCoroutine(reloadColorsCoroutine);
+        staffColors.Clear();
     }
 
     public IEnumerator ReloadColorsCoroutine()
     {
+        Debug.Log("ReloadColorsCoroutine");
         while (staffColors.Count < maxColorCount)
         {
             yield return new WaitForSeconds(colorCooldown);
+            Debug.Log("Loop ReloadColorsCoroutine availableColors: " + marbleColorManager.availableColors.Count);
             if (marbleColorManager.availableColors.Count == 0)
             {
                 yield break;
             }
-            var marbleColor = marbleColorManager.GetRandomAvailableMarbleColor();
-            staffColors.Add(marbleColor);
+            staffColors.Add(marbleColorManager.GetRandomAvailableMarbleColor());
+
         }
     }
 
@@ -110,6 +123,7 @@ public class Staff : MonoBehaviour
         InstantiateAndSetupProjectile(marblePrefab);
         fireSound.Play();
 
+        Debug.Log("Fire ReloadColorsCoroutine");
         StopCoroutine(reloadColorsCoroutine);
         reloadColorsCoroutine = StartCoroutine(ReloadColorsCoroutine());
     }

@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelCleared()
     {
+        GameIsOver = false;
         GameIsLevelCleared = true;
         Save();
     }
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         GameIsOver = true;
+        GameIsLevelCleared = false;
         TempScore = Score;
     }
 
@@ -88,11 +90,6 @@ public class GameManager : MonoBehaviour
         GameIsPaused = true;
     }
 
-    public void Lose()
-    {
-        ResetComboCount();
-    }
-
     public void Save()
     {
         Score = TempScore;
@@ -103,6 +100,8 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
+        GameIsOver = false;
+        GameIsLevelCleared = false;
         if (PlayerPrefs.HasKey("Level"))
         {
             Level = PlayerPrefs.GetInt("Level");

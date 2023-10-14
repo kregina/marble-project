@@ -15,30 +15,30 @@ public class Match3Manager : MonoBehaviour
         wave.OnMarblesChanged += OnMarblesChanged;
     }
 
-    private void OnMarblesChanged(Wave wave, int originIndex)
+    private void OnMarblesChanged(Wave wave, int originIndex, bool isTriggeredByPlayer)
     {
-        Match3OrMoreColors(originIndex);
+        if (wave == null || !wave.gameObject.activeSelf) return;
+        StopAllCoroutines();
+        StartCoroutine(Match3Coroutine(wave, originIndex, isTriggeredByPlayer));
     }
 
-    private void Match3OrMoreColors(int originIndex)
+    private IEnumerator Match3Coroutine(Wave wave, int originIndex, bool isTriggeredByPlayer)
     {
-        if (originIndex < 0 || originIndex >= wave.marbles.Count)
-        {
-            return;
-        }
+        yield return new WaitForSeconds(.4f);
+
+        if (wave == null || !wave.gameObject.activeSelf) yield break;
+        if (originIndex < 0 || originIndex >= wave.marbles.Count) yield break;
+
         var (count, startIndex) = findMatchesStartingAt(originIndex);
 
-        if (count >= 3)
-        {
-            StartCoroutine(RemoveMarblesAfterDelay(startIndex, count, .4f));
-        }
-    }
+        if (count < 3) yield break;
+        if (!isTriggeredByPlayer && startIndex >= originIndex) yield break;
 
-    private IEnumerator RemoveMarblesAfterDelay(int startIndex, int count, float delay)
-    {
-        yield return new WaitForSeconds(delay);
         explosionSound.PlayOneShot(explosionSound.clip);
-        wave.RemoveMarblesRange(startIndex, count);
+        int scoreIncrement = count * 1;
+        GameManager.Instance.SetComboCount();
+        GameManager.Instance.SetScore(scoreIncrement);
+        wave.RemoveMarblesRange(startIndex, count, false);
     }
 
     private (int count, int startIndex) findMatchesStartingAt(int originIndex)

@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
             Marble otherMarble = collision.gameObject.GetComponent<Marble>();
             var otherMarbleIndex = otherMarble.parentWave.marbles.IndexOf(otherMarble);
             var insertIndex = DidHitOnTheFront(collision) ? otherMarbleIndex + 1 : otherMarbleIndex;
-            otherMarble.parentWave.InsertMarbleAt(marble, insertIndex);
+            otherMarble.parentWave.InsertMarbleAt(marble, insertIndex, true);
             StopProjectile();
         }
         else
@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
         {
             hasCollidedBefore = true;
             Pusher pusher = other.gameObject.GetComponent<Pusher>();
-            pusher.parentWave.InsertMarbleAt(marble, 0);
+            pusher.parentWave.InsertMarbleAt(marble, 0, true);
             StopProjectile();
         }
         else

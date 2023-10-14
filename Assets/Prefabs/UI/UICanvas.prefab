@@ -1008,7 +1008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7743191626843501586
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1396,8 +1396,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
+      - m_Target: {fileID: 5012531757471745070}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -1933,8 +1933,6 @@ MonoBehaviour:
   menuHeader: {fileID: 0}
   continueButton: {fileID: 0}
   tryAgainButton: {fileID: 0}
-  pauseButton: {fileID: 0}
-  uiPanel: {fileID: 0}
 --- !u!1 &6760171369052674320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,6 +2180,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 8782032887599568355}
+    - target: {fileID: 1319602327692483962, guid: a20f8bc6b7d68ed488af8bd1ba040f23,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 5012531757471745070}
     - target: {fileID: 1319602327692483962, guid: a20f8bc6b7d68ed488af8bd1ba040f23,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState

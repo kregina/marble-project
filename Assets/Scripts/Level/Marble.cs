@@ -11,12 +11,13 @@ public class Marble : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Destroy(gameObject, 0.01f);    
+        Destroy(gameObject, .1f);
     }
 
-    void OnDestroy()
+    private void OnDisable()
     {
         Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
+        Destroy(gameObject, .1f);
     }
 }
 
