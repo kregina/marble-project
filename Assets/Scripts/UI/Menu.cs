@@ -7,6 +7,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI saveButton;
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject uiPanel;
+    [SerializeField] private GameObject tutorialBox;
 
     public void Continue()
     {

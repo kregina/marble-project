@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public bool GameIsPaused { get; private set; }
     public bool GameIsOver { get; private set; }
     public bool GameIsLevelCleared { get; private set; }
+    public bool ShowTutorial { get; private set; }
 
     private void Awake()
     {
@@ -24,6 +25,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void ShowTutorialBox(bool show)
+    {
+        ShowTutorial = show;
     }
 
     public void LevelCleared()

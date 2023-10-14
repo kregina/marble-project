@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class LevelInfo : MonoBehaviour
 {
@@ -12,11 +13,25 @@ public class LevelInfo : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private Button tryAgainButton;
     [SerializeField] private GameObject uiPanel;
+    [SerializeField] private GameObject tutorialBox;
 
     void Start()
     {
         GameManager.Instance.Load();
         uiPanel.SetActive(false);
+
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(StartGame());
+        }
+    }
+
+    private IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Starting game");
+        tutorialBox.SetActive(true);
+        GameManager.Instance.Pause();
     }
 
     private void Update()
