@@ -10,7 +10,7 @@ public class StaffPathFollower : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera cinemachineCamera;
     [SerializeField] private EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Stop;
     [SerializeField] private Vector3 newCameraOffset = new Vector3(0, 8, 0);
-    [SerializeField] private float speed = 5;
+    [SerializeField] private float speed = 25f;
     [SerializeField] private float transitionDuration = 1f;
 
     private float distanceTravelled;
