@@ -7,7 +7,7 @@ using UnityEngine;
 public class Wave : MonoBehaviour
 {
     public Pusher pusherPrefab;
-    public event Action<Wave, int, bool> OnMarblesChanged;
+    public event Action<Wave, Marble?, bool> OnMarblesChanged;
     public float speed = .2f;
     public float wavePushBackOnMatch = 2f;
 
@@ -76,7 +76,7 @@ public class Wave : MonoBehaviour
 
         UpdateDistanceTraveledOnChildren();
 
-        OnMarblesChanged(this, index, isTriggeredByPlayer);
+        OnMarblesChanged(this, marble, isTriggeredByPlayer);
     }
 
     public void InsertMarblesRangeAt(ICollection<Marble> marblesToInsert, int index, bool isTriggeredByPlayer)
@@ -94,7 +94,7 @@ public class Wave : MonoBehaviour
 
         UpdateDistanceTraveledOnChildren();
 
-        OnMarblesChanged(this, index, isTriggeredByPlayer);
+        OnMarblesChanged(this, marblesToInsert.First(), isTriggeredByPlayer);
     }
 
     public void RemoveMarblesRange(int startIndex, int count, bool isTriggeredByPlayer)
@@ -108,7 +108,7 @@ public class Wave : MonoBehaviour
 
         marbles.RemoveRange(startIndex, count);
 
-        OnMarblesChanged(this, startIndex, isTriggeredByPlayer);        
+        OnMarblesChanged(this, marbles.ElementAtOrDefault(startIndex), isTriggeredByPlayer);        
 
         distanceTravelled = Math.Max(0, distanceTravelled - wavePushBackOnMatch);
     }
@@ -117,7 +117,7 @@ public class Wave : MonoBehaviour
     {
         InsertMarblesRangeAt(otherWave.marbles, marbles.Count - 1, false);
         otherWave.marbles.Clear();
-        otherWave.OnMarblesChanged(otherWave, 0, false);
+        otherWave.OnMarblesChanged(otherWave, null, false);
     }
 
     private void OnDisable()

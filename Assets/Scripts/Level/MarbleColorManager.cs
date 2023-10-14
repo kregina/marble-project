@@ -16,6 +16,8 @@ public class MarbleColorManager : MonoBehaviour
 
     private Dictionary<MarbleColor, int> colorCount = new();
 
+    private int lastRandom;
+
 
     public void AddColor(MarbleColor color)
     {
@@ -64,7 +66,15 @@ public class MarbleColorManager : MonoBehaviour
         {
             throw new Exception("No available colors");
         }
-        return availableColors.ElementAt(UnityEngine.Random.Range(0, availableColors.Count - 1));
+        var rand = UnityEngine.Random.Range(0, availableColors.Count - 1);
+
+        if(rand == lastRandom)
+        {
+            rand = UnityEngine.Random.Range(0, availableColors.Count - 1);
+        }
+        lastRandom = rand;
+
+        return availableColors.ElementAt(rand);
     }
 
     public Marble GetMarblePrefab(MarbleColor color)

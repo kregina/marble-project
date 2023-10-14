@@ -15,19 +15,24 @@ public class Match3Manager : MonoBehaviour
         wave.OnMarblesChanged += OnMarblesChanged;
     }
 
-    private void OnMarblesChanged(Wave wave, int originIndex, bool isTriggeredByPlayer)
+    private void OnMarblesChanged(Wave wave, Marble originMarble, bool isTriggeredByPlayer)
     {
         if (wave == null || !wave.gameObject.activeSelf) return;
-        StopAllCoroutines();
-        StartCoroutine(Match3Coroutine(wave, originIndex, isTriggeredByPlayer));
+        if(originMarble == null) return;
+
+        StartCoroutine(Match3Coroutine(wave, originMarble, isTriggeredByPlayer));
     }
 
-    private IEnumerator Match3Coroutine(Wave wave, int originIndex, bool isTriggeredByPlayer)
+    private IEnumerator Match3Coroutine(Wave wave, Marble originMarble, bool isTriggeredByPlayer)
     {
         yield return new WaitForSeconds(.4f);
 
         if (wave == null || !wave.gameObject.activeSelf) yield break;
-        if (originIndex < 0 || originIndex >= wave.marbles.Count) yield break;
+        if (originMarble == null) yield break;
+
+        var originIndex = wave.marbles.IndexOf(originMarble);
+
+        if (originIndex == -1) yield break;
 
         var (count, startIndex) = findMatchesStartingAt(originIndex);
 

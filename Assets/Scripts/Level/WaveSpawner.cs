@@ -47,7 +47,7 @@ public class WaveSpawner : MonoBehaviour
         waves.Add(newWave);
     }
 
-    void OnMarblesChanged(Wave wave, int originIndex, bool isTriggeredByPlayer)
+    void OnMarblesChanged(Wave wave, Marble originMarble, bool isTriggeredByPlayer)
     {
         if (wave.marbles.Count == 0)
         {
