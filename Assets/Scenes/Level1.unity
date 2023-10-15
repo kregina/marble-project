@@ -58674,6 +58674,7 @@ MonoBehaviour:
   - {fileID: 4423318929999820951, guid: c98664c8b97dbad419b8e98fae16b9f0, type: 3}
   - {fileID: 8625137314758653980, guid: 6624d8db1255b9e4e9a1876a42838a5a, type: 3}
   - {fileID: 670984935095942955, guid: 3cbbe0d9925595a4bb54331be3cd49be, type: 3}
+  waveSpawner: {fileID: 911007645}
 --- !u!4 &1389167217
 Transform:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class MarbleColorManager : MonoBehaviour
 
     private int lastRandom;
 
+    public WaveSpawner waveSpawner;
+
 
     public void AddColor(MarbleColor color)
     {
@@ -64,17 +66,26 @@ public class MarbleColorManager : MonoBehaviour
     {
         if(availableColors.Count == 0)
         {
-            throw new Exception("No available colors");
+            throw new Exception("No available colors in availableColors");
         }
-        var rand = UnityEngine.Random.Range(0, availableColors.Count - 1);
+
+        var marblesInFirstWave = waveSpawner.waves.FirstOrDefault()?.marbles.Select(m => m.color).ToList();
+
+        if (marblesInFirstWave.Count == 0)
+        {
+            throw new Exception("No available colors in marblesInFirstWave");
+        }
+
+
+        var rand = UnityEngine.Random.Range(0, marblesInFirstWave.Count - 1);
 
         if(rand == lastRandom)
         {
-            rand = UnityEngine.Random.Range(0, availableColors.Count - 1);
+            rand = UnityEngine.Random.Range(0, marblesInFirstWave.Count - 1);
         }
         lastRandom = rand;
 
-        return availableColors.ElementAt(rand);
+        return marblesInFirstWave.ElementAt(rand);
     }
 
     public Marble GetMarblePrefab(MarbleColor color)
